@@ -8,15 +8,15 @@ public with sharing class AccountHelper {
         
         for(Account acc : listNew) {
             if(acc.Type == 'CPF' && !Utils.validaCPF(acc.AccountNumber)){
-                acc.addError(new AccountTriggerException('Número do cliente é inválido'));
+                acc.addError(new AccountTriggerException(Label.InvalidAccountNumber));
             }
 
             if(acc.Type == 'CNPJ' && !Utils.validaCNPJ(acc.AccountNumber)){
-                acc.addError(new AccountTriggerException('Número do cliente é inválido'));
+                acc.addError(new AccountTriggerException(Label.InvalidAccountNumber));
             }
 
             if(!Utils.validaCPF(acc.AccountNumber) && !Utils.validaCNPJ(acc.AccountNumber)){
-                acc.addError(new AccountTriggerException('Número do cliente é inválido'));
+                acc.addError(new AccountTriggerException(Label.InvalidAccountNumber));
             }
         }
     }
