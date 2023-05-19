@@ -1,13 +1,13 @@
 public with sharing class Utils {
     public static boolean validaCPF(String CPF) {
 
-        if(CPF == null) {
+        if(CPF == null || CPF.length() != 11 || !CPF.containsOnly('1234567890')) {
             return false;
         }
 
         Integer sum = 0, peso = 10, digitTen, digitEleven, r, num;
 
-        List<String> cpfString = cpf.split('');
+        List<String> cpfString = CPF.split('');
         
         for (Integer i=0; i<9; i++) {
             num = Integer.valueOf(cpfString[i]); 
@@ -44,7 +44,7 @@ public with sharing class Utils {
 
     public static boolean validaCNPJ(String CNPJ) {
 
-        if(CNPJ == null) {
+        if(CNPJ == null || CNPJ.length() != 14 || !CNPJ.containsOnly('1234567890')) {
             return false;
         }
 
