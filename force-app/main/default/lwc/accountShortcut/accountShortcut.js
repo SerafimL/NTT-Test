@@ -21,14 +21,24 @@ export default class RecordEditFormExample extends LightningElement {
         }
     }
 
-    onSuccess(event) {
-        console.log(JSON.stringify(event.detail.fields.AccountNumber));
+    handleSuccess(event) {
         this.dispatchEvent(new ShowToastEvent({
             title: 'Sucesso!',
             message:
                 'Os dados da conta deste contato foram atualizados.',
             variant:'success'
         }));
+    }
 
+    handleError(event) {
+        console.log(JSON.stringify(event.detail));
+        const message = event?.detail?.detail;
+        if(message) {
+            this.dispatchEvent(new ShowToastEvent({
+                title: 'Erro!',
+                message: message,
+                variant:'error'
+            }));
+        }
     }
 }

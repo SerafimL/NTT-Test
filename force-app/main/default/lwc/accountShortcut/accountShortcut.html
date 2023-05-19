@@ -4,7 +4,8 @@
             <lightning-record-edit-form
                 object-api-name="Account"
                 record-id={accountId}
-                onsuccess={onSuccess}
+                onsuccess={handleSuccess}
+                onerror={handleError}
                 >
                 <lightning-input-field field-name={accountName}> </lightning-input-field>
                 <lightning-input-field field-name={accountNumber}> </lightning-input-field>
