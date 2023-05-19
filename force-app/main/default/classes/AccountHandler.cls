@@ -23,11 +23,15 @@ public with sharing class AccountHandler extends TriggerHandler {
         return runTrigger = false;
     }
 
-    public override void beforeInsert() {}
+    public override void beforeInsert() {
+        AccountHelper.validateAccountNumber((List<Account>)newRecordList);
+    }
 
     public override void afterInsert() {}
 
-    public override void beforeUpdate() {}
+    public override void beforeUpdate() {
+        AccountHelper.validateAccountNumber((Map<Id, Account>)newMap);
+    }
 
     public override void afterUpdate() {}
 

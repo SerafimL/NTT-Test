@@ -1,6 +1,10 @@
 public with sharing class Utils {
     public static boolean validaCPF(String CPF) {
 
+        if(CPF == null) {
+            return false;
+        }
+
         Integer sum = 0, peso = 10, digitTen, digitEleven, r, num;
 
         List<String> cpfString = cpf.split('');
@@ -39,6 +43,10 @@ public with sharing class Utils {
     }
 
     public static boolean validaCNPJ(String CNPJ) {
+
+        if(CNPJ == null) {
+            return false;
+        }
 
         Integer sum = 0, peso = 2, r, num, digtThirteen, digtFourteen;
         List<String> cnpjString = CNPJ.split('');
