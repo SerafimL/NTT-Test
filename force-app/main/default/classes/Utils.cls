@@ -48,7 +48,7 @@ public with sharing class Utils {
             return false;
         }
 
-        Integer sum = 0, peso = 2, r, num, digtThirteen, digtFourteen;
+        Integer sum = 0, peso = 2, r, num, digitThirteen, digitFourteen;
         List<String> cnpjString = CNPJ.split('');
 
         for (Integer i=11; i>=0; i--) {
@@ -61,10 +61,10 @@ public with sharing class Utils {
 
         r = math.mod(sum, 11);
         if ((r == 0) || (r == 1)) {
-            digtThirteen = 0;
+            digitThirteen = 0;
         }
         else {
-            digtThirteen = Integer.valueOf(11-r);
+            digitThirteen = Integer.valueOf(11-r);
         } 
 
         sum = 0;
@@ -79,12 +79,12 @@ public with sharing class Utils {
 
         r = math.mod(sum, 11);
         if ((r == 0) || (r == 1)) {
-            digtFourteen = 0;
+            digitFourteen = 0;
         }
         else {
-            digtFourteen = Integer.valueOf(11-r);
+            digitFourteen = Integer.valueOf(11-r);
         }
 
-        return (digtThirteen == Integer.valueOf(cnpjString[12]) && digtFourteen == Integer.valueOf(cnpjString[13]));
+        return (digitThirteen == Integer.valueOf(cnpjString[12]) && digitFourteen == Integer.valueOf(cnpjString[13]));
     }
 }
