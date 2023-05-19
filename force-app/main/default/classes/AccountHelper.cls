@@ -1,7 +1,7 @@
 public with sharing class AccountHelper {
 
-    public static final Id PARTNER_RECORDTYPE = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Parceiro').getRecordTypeId();
-    public static final Id FINAL_CUSTOMER_RECORDTYPE = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Consumidor Final').getRecordTypeId();
+    public static final Id PARTNER_RECORDTYPE = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Parceiro').getRecordTypeId();
+    public static final Id FINAL_CUSTOMER_RECORDTYPE = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('ConsumidorFinal').getRecordTypeId();
 
     public static void validateAccountNumber(Map<Id, Account> newMap) {
         validateAccountNumber(newMap.values());
@@ -22,6 +22,18 @@ public with sharing class AccountHelper {
         }
     }
 
+    public static void createOpportunityToPartners(Map<Id, Account> mapNew, Map<Id, Account> mapOld) {
+        List<Account> accList = new List<Account>();
+        for(String id : mapNew.keySet()) {
+            Account accOld = mapOld.get(id);
+            Account accNew = mapNew.get(id);
+
+            if(accNew.RecordTypeId == PARTNER_RECORDTYPE && accOld.RecordTypeId != PARTNER_RECORDTYPE) {
+                accList.add(accNew);
+            }
+        }
+        if(!accList.isEmpty()) createOpportunityToPartners(accList);
+    }
 
     public static void createOpportunityToPartners(List<Account> listNew) {
         
@@ -35,10 +47,24 @@ public with sharing class AccountHelper {
             oppList.add(new Opportunity(
                 Name = (acc.Name + ' - opp Parceiro'),
                 CloseDate = System.today().addDays(30),
-                StageName = 'Qualification'
+                StageName = 'Qualification',
+                AccountId = acc.Id
             ));
         }
         insert oppList;
+    }
+
+    public static void createTaskToFinalCustomers(Map<Id, Account> mapNew, Map<Id, Account> mapOld) {
+        List<Account> accList = new List<Account>();
+        for(String id : mapNew.keySet()) {
+            Account accOld = mapOld.get(id);
+            Account accNew = mapNew.get(id);
+
+            if(accNew.RecordTypeId == FINAL_CUSTOMER_RECORDTYPE && accOld.RecordTypeId != FINAL_CUSTOMER_RECORDTYPE) {
+                accList.add(accNew);
+            }
+        }
+        if(!accList.isEmpty()) createTaskToFinalCustomers(accList);
     }
 
     public static void createTaskToFinalCustomers(List<Account> listNew) {

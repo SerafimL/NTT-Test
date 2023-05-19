@@ -28,15 +28,18 @@ public with sharing class AccountHandler extends TriggerHandler {
     }
 
     public override void afterInsert() {
-        AccountHelper.createOpportunityToPartners(listNew);
-        AccountHelper.createTaskToFinalCustomers(listNew);
+        AccountHelper.createOpportunityToPartners((List<Account>)newRecordList);
+        AccountHelper.createTaskToFinalCustomers((List<Account>)newRecordList);
     }
 
     public override void beforeUpdate() {
         AccountHelper.validateAccountNumber((Map<Id, Account>)newMap);
     }
 
-    public override void afterUpdate() {}
+    public override void afterUpdate() {
+        AccountHelper.createOpportunityToPartners((Map<Id, Account>)newMap, (Map<Id, Account>)oldMap);
+        AccountHelper.createTaskToFinalCustomers((Map<Id, Account>)newMap, (Map<Id, Account>)oldMap);
+    }
 
     public override void beforeDelete() {}
 
