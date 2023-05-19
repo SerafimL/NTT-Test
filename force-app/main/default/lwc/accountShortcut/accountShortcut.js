@@ -21,7 +21,8 @@ export default class RecordEditFormExample extends LightningElement {
         }
     }
 
-    onSubmit() {
+    onSuccess(event) {
+        console.log(JSON.stringify(event.detail.fields.AccountNumber));
         this.dispatchEvent(new ShowToastEvent({
             title: 'Sucesso!',
             message:
